@@ -1,40 +1,45 @@
 # CQA--工业界
 
-* [1 任务](#1-任务)
-   * [1.1 任务定义](#11-任务定义)
-   * [1.2 任务分类](#12-任务分类)
-   * [1.3 评测标准](#13-评测标准)
-   * [1.4  数据集](#14--数据集)  
-       * [“技术需求”与“技术成果”项目之间关联度计算模型（需求与成果匹配)](#技术需求与技术成果项目之间关联度计算模型需求与成果匹配)  
-       * [智能客服问题相似度算法设计——第三届魔镜杯大赛](#智能客服问题相似度算法设计第三届魔镜杯大赛)  
-       * [CCKS 2018 微众银行智能客服问句匹配大赛](#ccks-2018-微众银行智能客服问句匹配大赛)  
-       * [AFQMC 蚂蚁金融语义相似度](#afqmc-蚂蚁金融语义相似度)  
-       * [OPPO手机搜索排序query-title语义匹配数据集](#oppo手机搜索排序query-title语义匹配数据集)  
-       * [医疗问题相似度衡量竞赛数据集](#医疗问题相似度衡量竞赛数据集)  
-* [2 方法及模型](#2-方法及模型)
-   * [2.1 无监督方法](#21-无监督方法)
-      * [2.1.1 规则匹配](#211-规则匹配)
-      * [2.1.2 无监督文本表示](#212-无监督文本表示)
-      * [2.1.3 用于跨领域迁移学习方法](#213-用于跨领域迁移学习方法)
-* [2.2 有监督匹配算法](#22-有监督匹配算法)
-   * [2.2.1 基于意图识别的算法](#221-基于意图识别的算法)
-   * [2.2.2深度文本匹配模型](#222深度文本匹配模型)
-      * [表示型模型](#表示型模型)
-         * [Siamese networks模型](#siamese-networks模型)
-         * [DSSＭ 模型](#dssｍ-模型)
-         * [Sentence Bert](#sentence-bert)
-      * [交互型模型](#交互型模型)
-         * [MatchPyramid模型](#matchpyramid模型)
-         * [ESIM （Enhanced LSTM）](#esim-enhanced-lstm)
-   * [2.3 FAQ发现与优化](#23-faq发现与优化)
-      * [FAQ发现](#faq发现)
-      * [FAQ答案优化](#faq答案优化)
-* [3 产品案例](#3-产品案例)
-   * [产品1 百度AnyQ--ANswer Your Questions](#产品1-百度anyq--answer-your-questions)
-   * [产品2:腾讯知文--结构化FAQ问答 引擎](#产品2-腾讯知文--结构化faq问答引擎)
-   * [产品3: 阿里小蜜](#产品3-阿里小蜜)
-* [4 总结](#4-总结)
-* [5 相关资料](#5-相关资料)
+- [CQA--工业界](#cqa--工业界)
+  - [1 任务](#1-任务)
+    - [1.1 任务定义](#11-任务定义)
+    - [1.2 任务分类](#12-任务分类)
+    - [1.3 评测标准](#13-评测标准)
+    - [1.4  数据集](#14--数据集)
+        - [“技术需求”与“技术成果”项目之间关联度计算模型（需求与成果匹配）](#技术需求与技术成果项目之间关联度计算模型需求与成果匹配)
+        - [平安医疗科技疾病问答迁移学习比赛（疾病问句匹配）](#平安医疗科技疾病问答迁移学习比赛疾病问句匹配)
+        - [CAIL2019相似案例匹配大赛（法律文书匹配）](#cail2019相似案例匹配大赛法律文书匹配)
+        - [智能客服问题相似度算法设计——第三届魔镜杯大赛](#智能客服问题相似度算法设计第三届魔镜杯大赛)
+        - [CCKS 2018 微众银行智能客服问句匹配大赛](#ccks-2018-微众银行智能客服问句匹配大赛)
+        - [AFQMC 蚂蚁金融语义相似度](#afqmc-蚂蚁金融语义相似度)
+        - [OPPO手机搜索排序query-title语义匹配数据集](#oppo手机搜索排序query-title语义匹配数据集)
+        - [ 医疗问题相似度衡量竞赛数据集](#-医疗问题相似度衡量竞赛数据集)
+  - [2 方法及模型](#2-方法及模型)
+    - [2.1 无监督方法](#21-无监督方法)
+      - [2.1.1 规则匹配](#211-规则匹配)
+      - [2.1.2 无监督文本表示](#212-无监督文本表示)
+      - [2.1.3 用于跨领域迁移学习方法](#213-用于跨领域迁移学习方法)
+  - [2.2 有监督匹配算法](#22-有监督匹配算法)
+      - [2.2.2 问题意图分类--深度学习多分类模型（CNN\DNN\LSTM\…）](#222-问题意图分类--深度学习多分类模型cnndnnlstm)
+    - [2.2.2深度文本匹配模型](#222深度文本匹配模型)
+      - [表示型模型](#表示型模型)
+        - [Siamese networks模型](#siamese-networks模型)
+        - [DSSＭ 模型](#dssｍ-模型)
+        - [Sentence Bert](#sentence-bert)
+      - [交互型模型](#交互型模型)
+        - [MatchPyramid模型](#matchpyramid模型)
+        - [ESIM （Enhanced LSTM）](#esim-enhanced-lstm)
+    - [2.3 FAQ发现与优化](#23-faq发现与优化)
+      - [FAQ发现](#faq发现)
+      - [FAQ答案优化](#faq答案优化)
+  - [3 产品案例](#3-产品案例)
+    - [产品1 百度AnyQ--ANswer Your Questions](#产品1-百度anyq--answer-your-questions)
+    - [产品2: 腾讯知文--结构化FAQ问答引擎](#产品2-腾讯知文--结构化faq问答引擎)
+    - [产品3: 阿里小蜜](#产品3-阿里小蜜)
+  - [4 总结](#4-总结)
+    - [难点](#难点)
+    - [未来研究方向](#未来研究方向)
+  - [5 相关资料](#5-相关资料)
 
 ## 1 任务
 
@@ -91,8 +96,8 @@
 
   - 平均绝对差值是用来衡量模型预测结果对标准结果的接近程度一种衡量方法.MAE的值越小，说明预测数据与真实数据越接近。
 
-  <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/CQA-industry-MAE.png  width=200 alt=MAE公式></div>
-  <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/CQA-industry-score.png  width=180 alt=最终结果></div>
+  <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/CQA-industry-MAE.png  width=200 alt=MAE公式></div>
+  <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/CQA-industry-score.png  width=180 alt=最终结果></div>
 
   - 最终结果越接近1分数越高。
 
@@ -255,7 +260,7 @@
 
   - **语言模型**：根据现有的文本对每个单词由一篇文档生成的概率根据词频进行建模，将一段文本由另一段文本生成的概率作为其相似度得分。
 
-<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/languagemodel.png  width=650 alt=语言模型></div>
+<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/languagemodel.png  width=650 alt=语言模型></div>
 
 - 基于浅层语义的方法，这些方法对文档的浅层语义分布进行建模，用来估计文档的生成概率，如PLSA，LDA等。
 
@@ -265,7 +270,7 @@
 
     
 
-    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/PLSA.jpg  width=650 alt=PLSA></div>
+    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/PLSA.jpg  width=650 alt=PLSA></div>
 
     其中p(z|d)和P（w|z）是需要学习的参数。P(z|d)参数数目是主题数和文档数乘的关系，p(w|z)是词表数乘主题数的关系，参数空间很大，容易过拟合。
 
@@ -273,7 +278,7 @@
 
     如果说pLSA是频度学派代表，那LDA就是**贝叶斯学派**代表。LDA通过引入Dirichlet分布作为多项式共轭先验，在数学上完整解释了一个文档生成过程，其概率图模型如图所示。
 
-    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/LDA.jpg  width=650 alt=LDA></div>
+    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/LDA.jpg  width=650 alt=LDA></div>
 
     我们可以看出LDA中每篇文章的**生成过程**如下：
 
@@ -295,7 +300,7 @@
 
     第一步主要是对TFIDF加权平均词向量表示句子的方法进行改进。论文提出了一种**平滑倒词频** (smooth inverse frequency, SIF)方法用于计算每个词的加权系数，具体地，单词的权重为a/(a+p(w))，其中a为平滑参数，p(w)为（估计的）词频。直观理解SIF，就是说**频率越低的词在当前句子出现了，说明它在句子中的重要性更大，也就是加权系数更大**。对于第二步，通过移出所有句子的共有信息，因此保留下来的句子向量更能够表示本身并与其它句子向量产生差距。
 
-    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/SIF.png  width=650 alt=SIF算法流程></div>
+    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/SIF.png  width=650 alt=SIF算法流程></div>
 
   - **WMD**
 
@@ -303,15 +308,15 @@
 
     Word2Vec得到的词向量可以反映词与词之间的语义差别，WMD距离即对两个文档中的任意两个词所对应的词向量求欧氏距离然后再加权求和，大概是这样的形式：
 
-    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/WMD_eq.png   alt=WMD_eq></div>
+    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/WMD_eq.png   alt=WMD_eq></div>
 
     其中c(i,j)为i，j两个词所对应的词向量的欧氏距离。矩阵T代表了文档1中的一个词转移到文档2中一个词的权重。即解决如下线性规划问题（|d1|代表文档1的长度，|d2|代表文档2长度）：
 
-    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/wmd_eq2.png  alt=wmd_eq2></div>
+    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/wmd_eq2.png  alt=wmd_eq2></div>
 
     通过最小化矩阵Ｔ，我们就可以得到两个文档的ＷＭＤ距离。具体例子如下：
 
-    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/ＷＭＤ.png  width=650 alt=WMD></div>
+    <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/ＷＭＤ.png  width=650 alt=WMD></div>
 
 #### 2.1.3 用于跨领域迁移学习方法
 
@@ -344,7 +349,7 @@
 - 问答匹配任务在大多数情况下可以用意图分类解决，如先匹配用户问题意图，然后给出对应意图的答案。进而问答匹配任转化为二分类或多分类任务。
 - 工业真正的场景中，用户问题的问题个数是不固定的，所以会把最后一层Softmax更改为多个二分类模型。模型图如下：
 
-<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/多个二分类模型.jpeg  width=650 alt=多个二分类模型模型图></div>
+<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/多个二分类模型.jpeg  width=650 alt=多个二分类模型模型图></div>
 
 ### 2.2.2深度文本匹配模型
 
@@ -368,7 +373,7 @@
   - 先把 query 和 document 转换成 BOW 向量形式，然后通过 word hashing 变换做降维得到相对低维的向量，feed给 MLP 网络，输出层对应的低维向量就是 query 和 document 的语义向量（假定为 Q 和 D）。计算(D, Q)的余弦相似度后，用 softmax 做归一化得到的概率值是整个模型的最终输出，该值作为监督信号进行有监督训练。
 - **模型结构**：
 
-<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/CQA-industry-DSSM.png  width=650 alt=DSSM></div>
+<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/CQA-industry-DSSM.png  width=650 alt=DSSM></div>
 
 ##### Sentence Bert
 
@@ -382,7 +387,7 @@
 
 - **模型结构** :
 
-  <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/使用孪生BERT网络生成句子的嵌入表示.png  width=400 alt=Ssentence Bert></div>
+  <div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/使用孪生BERT网络生成句子的嵌入表示.png  width=400 alt=Ssentence Bert></div>
 
 #### 交互型模型
 
@@ -405,7 +410,7 @@
 
   - **结构**
 
-<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/CQA-industry-MatchPyramid.png  width=400 alt=MatchPyramid-overview></div>
+<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/CQA-industry-MatchPyramid.png  width=400 alt=MatchPyramid-overview></div>
 
 ##### ESIM （Enhanced LSTM）
 
@@ -422,7 +427,7 @@
 
 - **模型结构**
 
-<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/CQA-industry-ESIM.png  width=400 alt=ESIM></div>
+<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/CQA-industry-ESIM.png  width=400 alt=ESIM></div>
 
 ### 2.3 FAQ发现与优化
 
@@ -463,7 +468,7 @@ FAQ拆分是当一个FAQ里包含多个意图或者说多种情况的时候，Yi
     - AnyQ系统框架主要由Question Analysis、Retrieval、Matching、Re-Rank等部分组成。
     - 框架中包含的功能均通过插件形式加入，如Analysis中的中文切词，Retrieval中的倒排索引、语义索引，Matching中的Jaccard特征、SimNet语义匹配特征，当前共开放了20+种插件。
 
-<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/CQA-industry-AnyQFramework.png  width=400 alt=AnyQ-FAQ问答系统框></div>
+<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/CQA-industry-AnyQFramework.png  width=400 alt=AnyQ-FAQ问答系统框></div>
 
 - **特色**
     - **框架设计灵活，插件功能丰富**
@@ -484,7 +489,7 @@ FAQ拆分是当一个FAQ里包含多个意图或者说多种情况的时候，Yi
 - 无监督学习，基于快速检索
 - 有监督的学习，基于深度匹配
 
-<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/CQA-%E7%9F%A5%E6%96%87-%E5%9F%BA%E4%BA%8EAttention%E6%9C%BA%E5%88%B6%E7%9A%84Interaction-based%20networks.jpeg  width=500 alt=知文-基于Attention机制的Interaction-based_networks></div>
+<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/CQA-%E7%9F%A5%E6%96%87-%E5%9F%BA%E4%BA%8EAttention%E6%9C%BA%E5%88%B6%E7%9A%84Interaction-based%20networks.jpeg  width=500 alt=知文-基于Attention机制的Interaction-based_networks></div>
 
 采用了三个层次的方法来实现快速检索的方法
 
@@ -511,13 +516,13 @@ FAQ拆分是当一个FAQ里包含多个意图或者说多种情况的时候，Yi
 
 下图表示了阿里小蜜的意图和匹配分层的技术架构。
 
-![image](https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/640.png)
+![image](https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/640.png)
 
 **意图识别介绍：结合用户行为deep-learning模型的实践**
 
 通常将意图识别抽象成机器学习中的分类问题，在阿里小蜜的技术方案中除了传统的文本特征之外，考虑到本身在对话领域中存在语义意图不完整的情况，我们也加入了用实时、离线用户本身的行为及用户本身相关的特征，通过深度学习方案构建模型，对用户意图进行预测, 具体如下图：
 
-<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/blob/master/image/640-2.jpeg  width=400 alt=意图识别></div>
+<div align=center><img src=https://github.com/BDBC-KG-NLP/QA-Survey/raw/master/image/640-2.jpeg  width=400 alt=意图识别></div>
 
 
 在基于深度学习的分类预测模型上，我们有两种具体的选型方案：一种是多分类模型，一种是二分类模型。多分类模型的优点是性能快，但是对于需要扩展分类领域是整个模型需要重新训练；而二分类模型的优点就是扩展领域场景时原来的模型都可以复用，可以平台进行扩展，缺点也很明显需要不断的进行二分，整体的性能上不如多分类好，因此在具体的场景和数据量上可以做不同的选型。

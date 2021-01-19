@@ -39,7 +39,7 @@ SPARQL，λ-DCS、FunQL等查询语言可以用于查询以及操作KG中存储�
 
 ### 1.2. 任务定义
 知识库问答（knowledge based question answering,KB-QA）：给定自然语言形式的问题，通过对问题进行语义理解和解析，进而利用知识库进行查询、推理，最终得出答案。
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/kbqa%20definition.png)
+![image](image/kbqa_definition.png)
 
 （注：该图来自中科院刘康老师的报告）
 
@@ -178,7 +178,8 @@ QALD-6:
 - 第二步：经过第一步得到语法树的叶节点之后，自上而下构建语法树，文章中对任意两个叶节点都进行了逻辑形式的所有可以进行的操作（join，intersection，aggregation），得到了所有可能的语法树。
 
 如下图片为自然语言问题“where was Oboma born?”转换为逻辑形式的过程：
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/%E8%AF%AD%E4%B9%89%E8%A7%A3%E6%9E%90%E7%94%9F%E6%88%90%E9%80%BB%E8%BE%91%E5%BD%A2%E5%BC%8F.PNG)
+
+![image](image/SemanticParsing.png)
 
 经过以上两步可以获得候选语法树，之后训练分类器，求出自然语言问题在代表不同逻辑形式的候选语法树上的概率分布。至此完成了语义解析方法中最重要的步骤。
 
@@ -194,7 +195,8 @@ QALD-6:
 将问题的dependency tree转换为question graph，主要操作有：提取问题词qword（how，why，when之类的词），问题焦点qfocus（time，place等），问题主题词qtopic和问题中心动词qverb这四个问题特征，将这些词语在dependency tree上做标注，同时删去dependency tree上不重要的节点（如冠词，标点）。经过这一转换过程，可以找到问题中最关键的要素，完成了对问题的信息抽取。
 
 如下图片中是一个将dependency tree转换为question graph的例子：
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/%E5%B0%86%E4%BE%9D%E5%AD%98%E5%85%B3%E7%B3%BB%E6%A0%91%E8%BD%AC%E6%8D%A2%E4%B8%BA%E9%97%AE%E9%A2%98%E5%9B%BE.PNG)
+
+![](image/将依存关系树转换为问题图.png)
 
 #### 2.2.3. 训练分类器，判断候选答案是否正确
 分类器的输入特征是问题和某一个候选答案的特征结合形成。
@@ -211,7 +213,8 @@ QALD-6:
 下面介绍一个向量建模的经典方法，来自《Question answering with subgraph embeddings》。
 
 向量建模方法的核心步骤是将问题和候选答案分别映射到低维空间，得到它们的分布式表达。本文的方法如下：
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/%E5%90%91%E9%87%8F%E5%BB%BA%E6%A8%A1.PNG)
+
+![image](image/向量建模.png)
 
 **问题的分布式表达：**
 
@@ -275,10 +278,11 @@ QALD-6:
 这篇文章使用skeleton辅助semantic parsing，避免依存分析工具的错误，是一种创新的思路。
 
 > 《Multi-Task Learning with Multi-View Attention for Answer Selection and Knowledge Base Question Answering》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/multi%20task%20QA%20netword.PNG)
+
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/multi%20task%20QA%20netword.PNG)
 
 answer selection和KBQA是QA中两项重要的任务，现有的方法一般都将二者分开来做。作者认为这两项任务有着内在的关联，如：二者在本质上都是ranking的问题，AS任务可以获得KB中的先验知识，KBQA也能通过AS得到信息，因此这两项任务可以从对方得到有用的信息。论文中提出了一种multi-task的学习方法，首先在task-specific层对两个任务的输入单独做encode（word sequence使用BiLSTM做encoder，knowledge sequence由于是离散的信息，因此采用CNN做encoder）。经过task-specific层对两个任务的独立编码之后，在shared层结合两个AS、KBQA两个任务的representation，使用的神经网络是BiLSTM。shared层的输出最终使用KBQA softmax、AS softmax分别得到这两个任务的结果。
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/multi%20view%20attention.PNG)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/multi%20view%20attention.PNG)
 
 为了在表示空间增强不同任务之间的相互作用，作者提出一种multi-view的注意力机制，不仅仅利用task-specific层的attention，还结合了shared层的attention。其次，从word-level和knowledge-level这两个视角分别获得注意力信息。具体来说，有5个视角的attention：word,knowledge, semantic, knowledge semantic and co-attention。
 word view attention由question和answer的word sequence计算得到，计算方式为Mw = tanh(Ewq*Uw*Ewa),得到一个矩阵，然后对行、列分别进行max-pooling，可以得到word view的问题和答案注意力权重，其他view的注意力权重计算方式类似。
@@ -288,14 +292,14 @@ co-attention view：得到最终的question和answer之间attention，计算方�
 结合以上几种attention，得到最终的attention权重，shared层输出的question和answer与权重相乘就可以得到最后的问题和答案representation，因为考虑了很多层面的信息，因此这一表达应当信息很丰富。
 
 > 《variational reasoning for question answering with knowledge graph》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/VRN.PNG)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/VRN.PNG)
 
 文章首先提出了现有的基于语义解析方法的问题：（1）知识库中需要多跳才能获取的答案则无法回答（2）在实际应用中输入的问题通常存在噪声，此时语义解析就很难通过类似字符串匹配的方法找到句子中的topic entity。
 为了解决上述问题，模型分为两部分：第一部分是通过概率模型来识别问句中的实体。第二部分则是在问答时在知识图谱上做逻辑推理，在推理这部分的工作中我们给出了上一步识别的实体和问句希望系统能给出答案。文章中提出的模型在现在的数据集上跑出了较好的结果，为了验证在存在噪声数据上的效果，作者还在以人声为输入的数据上进行了实验。
 
 > 《Multi-Task Learning for Conversational Question Answering
 over a Large-Scale Knowledge Base》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/multi%20task.PNG)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/multi%20task.PNG)
 
 基于语义解析（semantic parsing）的kbqa方法通常将任务分解为几个子任务并依次解决，这样的方法有着明显的不足：子任务间的错误传递、共享信息困难。本文提出了一种multi task的学习框架：Multi-task Semantic Parsing (MaSP) model，模型由四部分组成：word embedding, contextual encoder, entity detection以及 pointer-equipped logical form decoder.内置的pointer network可以很好地结合到上游实体检测任务。
 
@@ -303,40 +307,40 @@ over a Large-Scale Knowledge Base》
 这篇论文的工作是基于GRAFT-Net，为了改进GRAFT-Net启发式子图抽取产生的结果过大并且有时不包含正确答案的问题。PullNet训练了另一个GRAFT-Net模型来完成子图抽取任务。通过训练迭代式的子图构建模型，在保证召回率的同时又缩小了子图规模。
 
 > 《A State-transition Framework to Answer Complex Questions over Knowledge Base》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/SQG%20%20generation.PNG)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/SQG%20%20generation.PNG)
 
 该论文主要针对复杂的问题，提出了一个状态转移框架和四种转移操作，可以将自然语言问题转化为语义查询图(semantic query graph (SQG) )从而能够使用现有的查询算法找到答案。与现有工作相比，本文的方法不依赖于人工定义的模板，针对复杂问题能够灵活的生成查询图，在DBpedia和Freebase知识库上多个QA数据集取得了较好的结果。
 
 > 《knowledge base question answering via encoding of complex query graphs》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/%E9%97%AE%E9%A2%98%E5%92%8C%E5%9B%BE%E5%8C%B9%E9%85%8D.PNG)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/%E9%97%AE%E9%A2%98%E5%92%8C%E5%9B%BE%E5%8C%B9%E9%85%8D.PNG)
 
 这篇论文同样主要关注复杂问题的回答，提出了一种基于向量的KBQA方法，将复杂的query structure编码为统一的向量，可以捕获到复杂的问题中不同semantic componentd的关系。首先通过分阶段的生成方法来生成候选图，之后通过神经网络来衡量问题与每个查询图之间的语义相似性，使得问题与最相符的查询图匹配。
 
 > 《Open Domain Question Answering Using Early Fusion of Knowledge Bases and Text》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/early%20fusion.PNG)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/early%20fusion.PNG)
 
 在QA任务中，现存的模型主要从外部的知识库（knowledge base）或者从非结构化的文本中寻找答案，也有人用一些方法将来自两个信息源的预测结果进行聚合，本文称之为后期融合，而本文关注的重点是早期融合，将与问题相关的KB实体和文本放在一起，然后训练单个模型提取问题相对应的答案。作者提出了GRAFT-Net (Graphs of Relations Among Facts and Text Networks),将KB实体和文本放入同一个子图，然后训练单个模型从子图中提取答案。
 
 > 《QUINT:Interpretable Question Answering over Knowledge Bases》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/quint.PNG)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/quint.PNG)
 
 提出了一种“QUINT”系统，最大的特点是论文题目中的“可解释性”，具体来说，当QUINT回答问题时，它将可视化从自然语言问题到最终答案的完整推导序列，具有较好的可解释性。QUINT系统的核心在于“role-aligned“模板，通过利用问题和答案，通过自动生成模板的方法，把问题映射成一个查询模板用于查询。
 
 > 《Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/ACL2017.png)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/ACL2017.png)
 
 算法分两个部分：
 子图阅读器(SGReader)运用图注意力技术获取子图实体的邻居只是，考虑(1)该邻居关系是否与问题相关(2)该邻居实体是否在问题中被提及。经过计算后，SGReader最终输出结合邻居知识的所有相关实体向量e'
 文本阅读器(KAReader)：根据已获取的知识信息重构问题，结合问题向量定位文档并聚合相关实体信息获得ed，最终concatenate起来对可能成为问题答案的实体进行预测。
 
 > 《Question Answering on Knowledge Bases and Text using Universal Schema and Memory Networks》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/ACL2019.png)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/ACL2019.png)
 
 传统QA要么只依赖KB用，要么只依赖文本，两者结合起来可以从结构化知识库和非结构化文本结合推理答案。本文通过联合嵌入KB和text的facts形成统一的结构化表示，允许信息的交错传播。该universal矩阵每一行都是一个是梯队，每一列代表它们在KB中的关系/文本之间的模式。
 文章中使用的数据集是SPADES，包含完形填空式的问题，有93K句子和1.8M实体，KB知识库为freebase，文本材料在ClueWeb。
 
 > 《Learning to Rank Query Graphs for Complex Question Answering over Knowledge Graphs》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/CIKM2019.png)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/CIKM2019.png)
 
 首先建立查询图，查询图是有向无环图，由 (grounded entity, existential variable, lambda variable, auxiliary function) 组成，其中 grounded entity 是可以链接到KB的实体，中间连接Z者KB中关系，lambda代表了答案实体，existential variable用来disambiguate，auxiliary function是对答案实体的constraints，有答案实体类别，问题类别(ask[是否含有], count, set)
 core chain是linear的查询图的subset，不包含constraints，只针对linking到的实体最多两跳构建core chain，其中对predicate的方向用 +/-说明
@@ -346,28 +350,28 @@ Predicting Auxiliary Constraints
     pair-wise ranking 把正类别和负类别分别编码算相似度
     
 > 《Message Passing for Complex Question Answering over Knowledge Graphs》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/CIKM2019_2.png)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/CIKM2019_2.png)
 
 问句分析：将回答分为问句解析以及答案推理，其中问句解析把问题定义为q=\<tq,Seqq\>，解析过程为根据问题识别问句类型tq以及n跳序列Seqq=(<EI,Pi,Ci>)hi=1(CRF=BiLSTM)，之后将n跳序列分别和知识库中实体关系匹配(BM25.embedding)。
 答案推理：对于每一跳中E,P,C抽出子图，然后通过相邻实体和关系的置信度来计算答案实体的置信度，取得答案。
 该模型在LC-QuAD数据集上达到了SOTA。
 
 > 《Neural Program Induction for KBQA Without Gold Programs or Query Annotations》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/IJCAI2019.png)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/IJCAI2019.png)
 
 dataset： WebQuestionsSP Complex Sequential QA
 gold input:at par with hand-crafted rule-based models
 in the noisy settings >> state-of-the-art models by a significant margin
 
 > 《Knowledge Base Question Answering with Topic Units》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/image/IJCAI2019_2.png)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//image/IJCAI2019_2.png)
 
 数据集:    WebQuestionSP       ComplexWebQuestions SimpleQuestions
 数据集对应Knowledge Base:Freebase，Freebase，FB2M (subset)
 使用了问题中除了实体与关系外的部分用来与知识图谱匹配，会从训练集的gt path中计算rel word与q word的互信息，进而增加q中信息(river mouth就是后选入的)，在链接到知识图谱上的实体/关系后，对这些topic units进行排序，再进行子图上的relation path排序，得到结果。eval结果来看在CWQ，SP以及WQSP的hit1上sota。
 
 > 《Bidirectional Attentive Memory Networks for Question Answering over Knowledge Bases  link》
-![image](https://github.com/lemonadeseason/KBQA-Survey/blob/master/NAACL2019_BAMnet.PNG)
+![image](https://raw.githubusercontent.com/lemonadeseason/KBQA-Survey/master//NAACL2019_BAMnet.PNG)
 本文改进了信息抽取来做KBQA的方法。现有的基于信息抽取的方法大多将问题和KB子图分别emcode，作者认为先验知识（即KB里的知识）可以帮助更好的理解question，同样question本身也可以使得我们关注到KB子图里重要的部分。基于以上想法，作者提出了Bidirectional Attentive Memory network（BAMnet），可以捕捉到问题和KB中重要的信息。在BAMnet网络之上，作者另外使用了two-way attention，帮助模型进一步得到更好的question和KB的representation。最终模型在webquestions上取得了比现有基于信息抽取更好的指标。 
 
 > 《Modeling Semantics with Gated Graph Neural Networks for Knowledge Base Question Answering》
